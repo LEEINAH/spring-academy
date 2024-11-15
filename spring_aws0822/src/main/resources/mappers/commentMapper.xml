@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.myaws.myapp.persistance.CommentMapper"> 
+
+<select id="commentSelectAll" parameterType="int" resultType="cv">
+	SELECT * 
+	FROM comment 
+	WHERE delyn='N' 
+	AND bidx=#{0} 
+	ORDER BY cidx DESC
+	LIMIT 0, #{1}
+</select>
+
+<select id="commentTotalCnt" parameterType="int" resultType="int">
+	SELECT COUNT(*)
+	FROM comment
+	WHERE delyn='N' AND bidx = #{bidx}
+</select>
+
+<insert id="commentInsert" parameterType="cv">
+	INSERT INTO comment(csubject, ccontents, cwriter, bidx, midx, cip)
+	VALUE(NULL, #{ccontents}, #{cwriter}, #{bidx}, #{midx}, #{cip})
+</insert>
+
+<update id="commentDelete" parameterType="cv">
+	UPDATE comment 
+	SET delyn='Y', cip=#{cip} 
+	WHERE cidx=#{cidx} and midx=#{midx}
+</update>
+
+
+</mapper>
